@@ -1,0 +1,9 @@
+<div class="card card-body">
+    <form (submit)="onSubmit()">
+        <div class="form-group">
+            <input type="text" name="" id="" class="form-control" placeholder="Enter a log..." [(ngModel)]="text" name="text">
+            <input type="submit" value="Add Log" class="btn btn-light m-2" [disabled]="!this.text">
+            <button class="btn btn-warning m-2" [hidden]="!this.text">Clear</button>
+        </div>
+    </form>
+</div>
