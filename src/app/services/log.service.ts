@@ -9,38 +9,22 @@ export class LogService {
   private logSource = new BehaviorSubject<Log>({id:null, text:null, date:null});
   selectedLog = this.logSource.asObservable();
   constructor() {
-    this.logs = [
-      {
-        id:'1',
-        text: 'Log first ',
-        date:'12/14/2017'
-      },
-      {
-        id:'2',
-        text: 'Log two ',
-        date:'11/11/2012'
-      },
-      {
-        id:'3',
-        text: 'Log third ',
-        date:'9/10/2012'
-      },
-      {
-        id:'4',
-        text: 'Log forth ',
-        date:'12/10/2012'
-      },
-    ]
-
   }
   getLogs():Observable<Log []>{
+    if(JSON.parse(localStorage.getItem('logs')) === null){
+      this.logs = [];
+    } else {
+      this.logs = JSON.parse(localStorage.getItem('logs'));
+    }
     return of(this.logs);
   }
+ 
   setFormatLog(log:Log){
     this.logSource.next(log);
   }
   addLog(log:Log){
     this.logs.unshift(log);
+    localStorage.setItem('logs', JSON.stringify(this.logs));
   }
   updateLog(log:Log){
     this.logs.forEach((cur, index) => {
@@ -49,5 +33,16 @@ export class LogService {
       }
     });
     this.logs.unshift(log);
+    localStorage.setItem('logs', JSON.stringify(this.logs));
+  }
+  removeLog(log:Log){
+    this.logs.forEach((cu, index) => {
+      if(cu.id == log.id){
+        console.log('log for remove finded')
+        this.logs.splice(index, 1);
+      }
+    });
+    localStorage.setItem('logs', JSON.stringify(this.logs));
+
   }
 }

@@ -2,8 +2,10 @@
     <form (submit)="onSubmit()">
         <div class="form-group">
             <input type="text" name="" id="" class="form-control" placeholder="Enter a log..." [(ngModel)]="text" name="text">
-            <input type="submit" value="Add Log" class="btn btn-light m-2" [disabled]="!this.text">
-            <button class="btn btn-warning m-2" [hidden]="!this.text">Clear</button>
+            <input type="submit" value="Add Log" class="btn btn-light m-2" [hidden]="!isNew">
+            <input type="submit" value="Update Log" class="btn btn-light m-2" [hidden]="isNew">
+            <button type="button" class="btn btn-warning m-2" [hidden]="!text && isNew" (click)="onClear()">Clear</button>
         </div>
     </form>
 </div>
+<app-logs (clickedLog)="onClickedLogEvent($event)"></app-logs>
